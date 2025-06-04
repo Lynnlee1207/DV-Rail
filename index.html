@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Railway Chronicle - European Rail Performance Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+</head>
+<body>
+    <header class="newspaper-header">
+        <div class="masthead">
+            <h1>The Railway Chronicle</h1>
+            <div class="date">Est. 2024</div>
+        </div>
+    </header>
+
+    <main class="newspaper-content">
+        <article class="lead-story">
+            <header class="story-header">
+                <h2 class="main-headline">Europe's Rail Backbone</h2>
+                <p class="sub-headline">A Tale of Two Systems: British Railways in European Context</p>
+            </header>
+
+            <div class="story-introduction">
+                <p>The railway is Europe's connective tissue—uniting countries, cities, and people. While some countries boast highly punctual and resilient systems, others still grapple with chronic delays, aging infrastructure, and service inconsistency.  In this opening chapter, we examine the baseline: How do European countries perform in punctuality, and where does the UK stand? Where does it lead, and where does it fall behind? Is performance defined by punctuality alone—or by how networks respond to stress, serve passengers, and recover revenue? </p>
+                <p>Let's begin our journey with a continental comparison that frames the challenges and sets the tone for our deeper UK-focused story.</p>
+            </div>
+
+            <div class="visualization-container">
+                <div class="stats-overview">
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <span class="stat-label">EU Average Punctuality</span>
+                            <span class="stat-value highlight-blue">82.8%</span>
+                            <span class="stat-subtext">of trains on time</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">UK Punctuality</span>
+                            <span class="stat-value highlight-red">73.3%</span>
+                            <span class="stat-subtext">of trains on time</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Performance Gap</span>
+                            <span class="stat-value highlight-orange">-9.5%</span>
+                            <span class="stat-subtext">difference from EU average</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">
+                    <span class="emphasis">Where</span> Are We Losing Time?
+                </h3>
+                <p class="section-subtitle">A map of European railway punctuality—and where the UK stands.</p>
+                <p class="section-hint">🖱 Click a country to reveal insights on punctuality, cancellations, and fares.</p>
+                
+                <div class="map-content">
+                    <div class="map-section">
+                        <div class="map-wrapper">
+                            <div class="map-container" id="mapChart"></div>
+                            <div class="map-controls">
+                                <button class="map-button" id="showTop5">Show Top 5</button>
+                                <button class="map-button" id="showUK">Focus on UK</button>
+                                <button class="map-button" id="resetMap">Reset Map</button>
+                            </div>
+                            <div id="map-tooltip"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="details-section">
+                        <div class="country-details">
+                            <h4>Country Performance Details</h4>
+                            <div class="country-name">UK</div>
+                            <div class="performance-stats">
+                                <div class="stat-row">
+                                    <span class="label">Punctuality Score:</span>
+                                    <span class="value highlight-red">77.6%</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="label">Cancellation Rate:</span>
+                                    <span class="value">3.4%</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="label">Average Price:</span>
+                                    <span class="value">€0.27/km</span>
+                                </div>
+                                <div class="stat-row">
+                                    <span class="label">Rating:</span>
+                                    <span class="value">8.1/10</span>
+                                </div>
+                            </div>
+                            <div class="key-insights">
+                                <h5>Key Insights</h5>
+                                <ul>
+                                    <li>Below EU punctuality benchmark</li>
+                                    <li>Higher than average ticket prices</li>
+                                </ul>
+                            </div>
+                            <div class="operators">
+                                <h5>Operators</h5>
+                                <ul>
+                                    <li>UK Rail Network</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="visualization-container">
+            <h3 class="section-title">
+                <span class="emphasis">Why</span> Reliability Fails
+            </h3>
+            <p class="section-subtitle">Across the map, behind every delay lies a deeper story of disruption.</p>
+            <div class="map-content">
+                <div class="split-section">
+                    <div class="split-column">
+                        <h4 class="subsection-title">
+                            <span class="emphasis">Where</span> Europe Cancels Most
+                        </h4>
+                        <p class="chart-introduction">
+                            <em>Most cancellations are concentrated in just a handful of countries. But why do large national networks—like Germany and the UK—struggle more than others?</em>
+                        </p>
+                        <div class="chart-container">
+                            <h3 class="chart-title">Cancellation Rates across Europe</h3>
+                            <div id="cancellationChart" class="image-bar-chart">
+                                <!-- Chart will be rendered here -->
+                            </div>
+                            <div class="vintage-clock"></div>
+                            <div id="chartTooltip" class="chart-tooltip"></div>
+                        </div>
+                        <!-- NEW SECTION: Smoothest Tracks (side-by-side subtitles) -->
+                        <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; margin-top: 9.5rem; margin-bottom: 1.5rem;">
+                            <h4 class="subsection-title" style="margin-left: 1.5rem; margin-top: 0; margin-bottom: 0;">
+                                <span class="emphasis">Which</span> Tracks Run Smoothest?
+                            </h4>
+                            <h4 class="subsection-title" style="margin-right: 1.5rem; margin-top: 0; margin-bottom: 0; text-align: right; margin-left: 23vw;">
+                                <span class="emphasis">Where</span> Does the UK Fit In?
+                            </h4>
+                        </div>
+                        <p class="chart-introduction" style="margin-left: 1.5rem; max-width: 1400px; width: 150%;">
+                            <em>Some countries seem to glide along with affordable, punctual trains—others derail on price, compensation, or fairness. What sets the smooth operators apart?</em>
+                        </p>
+                        <!-- Bubble Grid Chart Container -->
+                        <div id="bubbleGridChart" style="margin-top: 0.5rem; margin-left: 1.5rem;"></div>
+                    </div>
+                    <div class="split-column">
+                        <h4 class="subsection-title">
+                            <span class="emphasis">What</span> Defines "Good" Rail?
+                        </h4>
+                        <p class="chart-subtitle">From booking to bikes, how does Britain fare in digital and modal flexibility?</p>
+                        <div class="chart-container">
+                            <div class="service-metrics">
+                                <div id="radialChart" class="radial-chart">
+                                    <!-- Radial chart will be rendered here -->
+                                </div>
+                                <div id="radialTooltip" class="chart-tooltip"></div>
+                            </div>
+                        </div>
+                        <!-- UK fit in description, right column -->
+                        <p class="chart-introduction" style="margin-top: 10.5rem; margin-left: 13.5rem; max-width: 1400px; width: 150%; text-align: left;">
+                            <em>Despite its robust network, the UK continues to underperform in key service dimensions. But is it truly an outlier—or simply part of a struggling league of large rail systems?</em>
+                        </p>
+                        <div style="display: flex; flex-direction: row; align-items: flex-start; margin-top: -3.5rem; margin-left: 13rem;">
+                            <div id="networkFlowerChart"></div>
+                            <div id="networkGlobeAnim" style="margin-left: 3.5rem;"></div>
+                        </div>
+                        <p style="margin-top: -10rem; margin-left: 37rem; color: #666; font-size: 1.05rem; max-width: 900px; width: 60%;">
+                          European rail networks show no single pattern; diversity in service models is the norm.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- New major section: What's Holding the UK Back? -->
+        <section class="visualization-container" style="margin-top: 2.5rem;">
+            <h3 class="section-title">
+                <span class="emphasis">What's</span> Holding the UK Back?
+            </h3>
+            <p class="section-subtitle">Exploring the persistent barriers to better performance in Britain's railways.</p>
+            <div class="chart-container" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1.5px solid #e5e7eb; margin-top: 1.5rem; padding: 2.5rem 2.5rem 2.5rem 2.5rem; min-height: 420px;max-width: 1320px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+                    <h4 class="subsection-title" style="margin-left: 0.2rem; margin-top: -1rem; margin-bottom: 0;">
+                        <span class="emphasis">Which</span> Hidden Frictions Disrupt the System?
+                    </h4>
+                    <h4 class="subsection-title" style="margin-left:10rem;margin-right: 11rem; margin-top: -1rem; margin-bottom: 0;">
+                        <span class="emphasis">Is</span> It Worth It?
+                    </h4>
+                    <h4 class="subsection-title" style="margin-left: 1.5rem; margin-right: 40rem; margin-top: -1rem; margin-bottom: 0;">
+                        <span class="emphasis">How</span> Balanced Is the Service?
+                    </h4>
+                </div>
+                <div id="serviceRadarChart" style="width: 200px; height: 0px; margin-left: 58rem; margin-top: 0.5rem;"></div>
+                <div class="friction-timeline" style="position: relative; min-height: 400px;">
+                    <!-- Central vertical rail line -->
+                    <div class="friction-rail-vertical" style="position: absolute; left: 16%; top: 0; width: 8px; height: 98%; background: repeating-linear-gradient(180deg, #b6b7d8 0 18px, #fff 18px 28px); border-radius: 4px; transform: translateX(-50%);"></div>
+                    <!-- Animated train -->
+                    <img src="assets/images/train-side.png" alt="Train" class="friction-train-anim" style="position: absolute; left: 16%; width: 40px; height: 28px; transform: translate(-50%, 0); animation: train-down 4.5s linear infinite; z-index: 2; top: 0;">
+                    <!-- Friction 1: left image, right text -->
+                    <div class="friction-row" style="display: flex; align-items: flex-start; margin-bottom: 2rem; margin-top: 1rem;">
+                        <div class="friction-img" style="flex: 0 0 160px; margin-right: 1.5rem; text-align: right;">
+                            <img src="assets/images/uk-old-bridge.jpg" alt="Victorian rail viaducts" style="width: 150px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);margin-left:1rem;">
+                        </div>
+                        <div style="flex: 1 1 0; max-width: 300px; margin-left: 3rem; margin-top: -1.5rem;">
+                            <h5 style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: -0.8rem;">Ageing Infrastructure</h5>
+                            <p style="font-size: 0.9rem; color: #444;">Over 42% of the UK's rail bridges were built before 1900, creating a maintenance backlog and speed restrictions.</p>
+                        </div>
+                    </div>
+                    <!-- Friction 2: right image, left text -->
+                    <div class="friction-row" style="display: flex; align-items: flex-start; margin-bottom: 2rem; flex-direction: row-reverse;">
+                        <div class="friction-img" style="flex: 0 0 160px; margin-left: 1.5rem; text-align: left;">
+                            <img src="assets/images/uk-franchise-map.png" alt="Franchise map" style="width: 150px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-left: -55rem;">
+                        </div>
+                        <div style="flex: 1 1 0; max-width: 300px; margin-right:59rem; text-align: right; margin-top: -5rem;">
+                            <h5 style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: -0.8rem;">Complex Operator Model</h5>
+                            <p style="font-size: 0.9rem; color: #444;">The UK rail system operates under dozens of overlapping franchises, each with different incentives and coordination issues.</p>
+                        </div>
+                    </div>
+                    <!-- Friction 3: left image, right text -->
+                    <div class="friction-row" style="display: flex; align-items: flex-start; margin-bottom: 1rem;">
+                        <div class="friction-img" style="flex: 0 0 160px; margin-right: 1.5rem; text-align: right;">
+                            <img src="assets/images/uk-weather-map.png" alt="UK weather map" style="width: 150px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);margin-top:-2.5rem;">
+                        </div>
+                        <div style="flex: 1 1 0; max-width: 300px; margin-left: 3.2rem;margin-top:-5.5rem;">
+                            <h5 style="font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-top:3rem;margin-bottom: -0.8rem;">Weather Vulnerability</h5>
+                            <p style="font-size: 0.9rem; color: #444;">UK trains face frequent delays due to flooding, extreme heat, and high winds—climate volatility is reshaping scheduling.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="scatterPlot" style="width: 30%; height: 390px; margin-top: -26.5rem; position: relative; margin-left: 33rem;">
+                    <div id="scatterTooltip" style="position: absolute; background: rgba(255, 255, 255, 0.95); padding: 10px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); pointer-events: none; opacity: 0; transition: opacity 0.2s;"></div>
+                </div>
+                <style>
+                @keyframes train-down {
+                  0% { top: 0; }
+                  100% { top: calc(100% - 36px); }
+                }
+                #scatterPlot {
+                    background-image: 
+                        linear-gradient(45deg, rgba(0,0,0,0.02) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(0,0,0,0.02) 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.02) 75%),
+                        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.02) 75%);
+                    background-size: 20px 20px;
+                    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+                }
+                .axis-label {
+                    font-family: 'PT Serif', serif;
+                    font-size: 0.9rem;
+                    fill: #666;
+                }
+                .dot {
+                    transition: r 0.2s;
+                }
+                .dot:hover {
+                    r: 6;
+                }
+                </style>
+            </div>
+        </section>
+
+        <!-- New Section: Banner with Europe Map -->
+        <section class="visualization-container" style="margin-top: -1rem;">
+            <div id="europeBanner" style="width: 100%; height: 180px; background: url('assets/images/europe-map.jpg') center center/130% 130% no-repeat, linear-gradient(to bottom, #222 0%, #444 60%, #222 100%); border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; animation: uk-focus-zoom 2.5s cubic-bezier(0.77,0,0.18,1) 0.5s;">
+                <style>
+                @keyframes uk-focus-zoom {
+                  0% {
+                    background-position: center center;
+                    background-size: 130% 130%;
+                  }
+                  100% {
+                    background-position: 40% 38%;
+                    background-size: 220% 220%;
+                  }
+                }
+                </style>
+                <!-- Top fade -->
+                <div style="position: absolute; top: -20px; left: 0; width: 100%; height: 20px; background: linear-gradient(to bottom, #222 80%, #f8f7f3 100%); z-index: 2;"></div>
+                <!-- Bottom fade -->
+                <div style="position: absolute; bottom: -20px; left: 0; width: 100%; height:20px; background: linear-gradient(to top, #222 80%, #f8f7f3 100%); z-index: 2;"></div>
+                <!-- Center Title -->
+                <div style="position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; z-index: 3;">
+                    <span style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: #fff; text-shadow: 0 2px 12px #000, 0 1px 0 #222; letter-spacing: 1px; opacity: 0.72;">A Focus on UK</span>
+                    <div style="font-family: 'PT Serif', serif; font-size: 1.1rem; color: #e5e7eb; margin-top: 0.5rem; text-shadow: 0 1px 6px #000; font-style: italic;">Est.2024</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Section: Who's Riding the Rails—and When? -->
+        <section class="visualization-container" style="margin-top: 2.5rem;">
+            <div class="story-introduction" style="margin-top: -1rem; margin-bottom: 2rem;">
+                <p>While the UK underperforms in punctuality compared to its European peers, it stands out in areas like digital ticketing and compensation policy. These contrasts suggest a more complex story beneath the surface. To understand the challenges and strengths of Britain's railway system, we now dive deeper into its operational realities—uncovering where performance breaks down, how passengers move through the network, and what financial impacts arise along the way.</p>
+            </div>
+            <h3 class="section-title">
+                <span class="emphasis">What's</span> Disrupting the Network?</span>
+            </h3>
+            <p class="section-subtitle">Delays, breakdowns, and systemic stress—Britain's railways face disruptions from multiple fronts. But which causes hit hardest, and when does performance truly falter?</p>
+            <div class="chart-container" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1.5px solid #e5e7eb; margin-top: 1.5rem; margin-bottom:2rem;padding: 2.5rem 2.5rem 2.5rem 2.5rem; min-height: 1550px;max-width: 1320px">
+              <div id="performanceFilterGroup" style="display: flex; gap: 1.5rem; margin-top:-1.5rem;margin-bottom: 2.5rem; justify-content: flex-end; margin-right: 4rem;">
+                <button class="time-filter-btn active">ALL</button>
+                <button class="time-filter-btn">AM</button>
+                <button class="time-filter-btn">PM</button>
+                <button class="time-filter-btn">Peak</button>
+                <button class="time-filter-btn">Off-Peak</button>
+              </div>
+              <!-- Service Status Overview Card -->
+              <h3 class="subsection-title" style="margin-left: 0.2rem; margin-bottom: 0; margin-top:-1rem;">
+                Service Status Overview
+              </h3>
+              <div class="flex flex-row justify-between gap-4" style="display: flex; flex-direction: row; justify-content: space-between; gap: 1.5rem; margin-top:1rem;margin-bottom: 0.4rem; max-width: 600px; margin-left: 0.2rem;">
+                <div class="status-box" style="background: #f3f1eb; padding: 0.8rem 0.6rem; flex: 0 0 22%; text-align: center; border-radius: 4px;">
+                  <div id="planned-services" style="font-size: 1.8rem; font-weight: bold; color: #374151; font-family: Georgia, Times New Roman, serif;">-</div>
+                  <div style="color: #666; font-size: 0.9rem; margin-top: 0.2rem;">Planned Services</div>
+                </div>
+                <div class="status-box" style="background: #e8f5e9; padding: 0.8rem 0.6rem; flex: 0 0 22%; text-align: center; border-radius: 4px;">
+                  <div id="ontime-services" style="font-size: 1.8rem; font-weight: bold; color: #374151; font-family: Georgia, Times New Roman, serif;">-</div>
+                  <div style="color: #666; font-size: 0.9rem; margin-top: 0.2rem;">On Time Services</div>
+                </div>
+                <div class="status-box" style="background: #fff3e0; padding: 0.8rem 0.6rem; flex: 0 0 22%; text-align: center; border-radius: 4px;">
+                  <div id="delayed-services" style="font-size: 1.8rem; font-weight: bold; color: #374151; font-family: Georgia, Times New Roman, serif;">-</div>
+                  <div style="color: #666; font-size: 0.9rem; margin-top: 0.2rem;">Delayed Services</div>
+                </div>
+                <div class="status-box" style="background: #fbe9e7; padding: 0.8rem 0.6rem; flex: 0 0 22%; text-align: center; border-radius: 4px;">
+                  <div id="cancelled-services" style="font-size: 1.8rem; font-weight: bold; color: #374151; font-family: Georgia, Times New Roman, serif;">-</div>
+                  <div style="color: #666; font-size: 0.9rem; margin-top: 0.2rem;">Cancelled Services</div>
+                </div>
+              </div>
+              <h3 class="subsection-title" style="margin-left:45rem; margin-bottom: 0; margin-top:-9rem;text-align: right;">
+                <span class="emphasis">How often</span> are Train Services Cancelled Each Month?
+              </h3>
+              <div class="chart-container" style="background:transparent; border-radius: 8px; margin-top: 1.5rem; padding: 2.5rem 2.5rem 2.5rem 2.5rem; min-height: 220px; max-width: 550px;margin-left: 45rem;">
+                <div style="display: flex; flex-direction: row; align-items: flex-start;">
+                  <div id="horizon-chart" style="flex: 1 1 0; min-width: 300px; height: 220px; position: relative; margin-top:1.5rem; margin-left: -2rem;"></div>
+                  <div style="margin-left: 2.5rem; background: #fbe9e7; border-radius: 10px; padding: 0.9rem 1.5rem; min-width: 100px; min-height: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: -3.5rem;">
+                    <div id="cancellation-score" style="font-size: 1.6rem; font-family: 'Playfair Display', serif; font-weight: 900; color: #374151;">-</div>
+                    <div id="score-label" style="font-size: 0.75rem; color: #666; font-family: 'PT Serif', serif; margin-top: 0.2rem;">Cancellation Score</div>
+                  </div>
+                </div>
+                <div id="cancellation-insight" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #374151; margin-top: -1rem; margin-bottom: 2.5rem; max-width: 900px;">
+                  <b><span id="highest-month">March</span></b> had the highest number of cancellations at <b><span id="highest-count">495</span></b>, increased by <b><span id="highest-percent">14.58%</span></b>, while <b><span id="lowest-month">February</span></b> had the fewest with <b><span id="lowest-count">432</span></b>, decreased by <b><span id="lowest-percent">-9.05%</span></b>
+                </div>
+              </div>
+              <h3 class="subsection-title" style="margin-left: 0.2rem; margin-top: -28rem; margin-bottom: 0;">
+                <span class="emphasis">Which Months</span> have the Highest Consistency in On-Time Services?
+              </h3>
+              <div class="dashboard-card" style="margin-top: 1.2rem; height: 340px; padding: 1.2rem; position: relative; background: transparent;  display: flex; flex-direction: row; align-items: flex-start; max-width: 700px;margin-left: -3rem;">
+                <div id="lollipop-on-time" style="flex: 1; height: 100%;"></div>
+                <div id="on-time-reliability-score" style="width: 120px; height: 100px; background: #e8f5e9; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-left: -5rem; box-shadow: 0 2px 8px rgba(30,58,138,0.06);">
+                  <div style="font-size: 1.6rem; font-weight: bold; color: #222;"><span id="on-time-reliability-value">-</span></div>
+                  <div style="color: #374151; font-size: 0.9rem; text-align: center; margin-top: 0.2em;">Reliability<br>Score</div>
+                </div>
+              </div>
+              <h3 class="subsection-title" style="margin-left: 0.8rem; margin-top: -2rem; margin-bottom: 0;">
+                <span class="emphasis">What</span> are the Monthly Reliability Score for On-Time Services?
+              </h3>
+              <div style="display: flex; flex-direction: row; align-items: flex-start; width: 100%; margin-bottom: 1.5rem;">
+                <!-- 左侧：gauge + sparkline -->
+                <div style="flex: 0 0 340px; max-width: 360px; margin-left: 7rem; margin-top: 2rem;">
+                  <div style="display: flex; flex-direction: column; height: 320px;">
+                    <div id="gauge-chart" style="height: 75%; width: 120%;"></div>
+                    <div id="sparkline-chart" style="height: 30%; width: 150%; margin-top: -40px;margin-left:-3rem;"></div>
+                  </div>
+                </div>
+                <!-- 右侧：disruption表格 -->
+                <div style="flex: 1 1 0; min-width: 400px;">
+                  <h3 class="subsection-title" style="margin-left: 16rem; margin-top: -12rem; margin-bottom: 0; text-align: right;">
+                    <span class="emphasis">Which Days</span> Experienced Severe Disruptions?
+                  </h3>
+                  <div class="dashboard-card" style="margin-top: -1rem; height: 550px; margin-left: 14rem;">
+                    <div class="chart-area-lg" id="disruption-table" style="overflow-x: auto; height: calc(100% - 40px); padding: 16px;">
+                      <table style="width: 100%; border-collapse: collapse; font-family: Georgia, Times New Roman, serif;">
+                        <thead>
+                          <tr style="border-bottom: 1px solid #e5e7eb; text-align: left;">
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 120px; font-size: 0.95rem;">Dates</th>
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 100px; font-size: 0.95rem;">Cancellation<br>Score</th>
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 100px; font-size: 0.95rem;">Signal<br>Failure</th>
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 100px; font-size: 0.95rem;">Staffing</th>
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 100px; font-size: 0.95rem;">Technical<br>Issue</th>
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 100px; font-size: 0.95rem;">Traffic</th>
+                            <th style="padding: 12px 8px; color: #222; font-weight: 700; min-width: 100px; font-size: 0.95rem;">Weather</th>
+                          </tr>
+                        </thead>
+                        <tbody id="disruption-data">
+                          <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h3 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: 0;">
+                <span class="emphasis">What</span> are the Leading Causes of Train Service Cancellation and its Financial Impact on Revenue?
+              </h3>
+              <div style="display: flex; align-items: flex-start; gap: 2rem;">
+                <div id="leading-causes-tornado" style="width: 50%; max-width: 700px; height: 420px; margin-top: 1.2rem; margin-bottom: 2.5rem;"></div>
+                <div style="flex: 1;">
+                  <h3 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: 1rem;">
+                    <span class="emphasis">Common</span> Keywords in Delay Reasons
+                  </h3>
+                  <div id="delay-wordcloud" style="width: 100%; height: 380px; background: transparent;"></div>
+                </div>
+              </div>
+            </div>
+            <h3 class="section-title">
+                <span class="emphasis">Who's</span> Riding the Rails—and <span class="emphasis">When?</span>
+            </h3>
+            <p class="section-subtitle">From early-morning commuters to off-peak explorers, the UK's passenger rail usage reveals complex rhythms of movement. But where and when is the pressure most intense?</p>
+            <div class="chart-container" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1.5px solid #e5e7eb; margin-top: 1.5rem; padding: 2.5rem 2.5rem 2.5rem 2.5rem; min-height: 1150px;max-width: 1320px">
+                <div id="timeFilterGroup" style="display: flex; gap: 1.5rem; margin-top:-1.5rem;margin-bottom: 2.5rem; justify-content: flex-end; margin-right: 4rem;">
+                    <button class="time-filter-btn active">ALL</button>
+                    <button class="time-filter-btn">AM</button>
+                    <button class="time-filter-btn">PM</button>
+                    <button class="time-filter-btn">Peak</button>
+                    <button class="time-filter-btn">Off-Peak</button>
+                </div>
+                <div style="display: flex; align-items: flex-end; justify-content: space-between;margin-top: -2.5rem; margin-bottom: 0.5rem;">
+                  <h3 class="subsection-title" style="margin-left: 0.2rem; margin-bottom: 0;">
+                    <span class="emphasis">What</span> is the Trend of Passenger Journeys?
+                  </h3>
+                  <h4 class="subsection-title" style="margin-right:26rem; margin-left: 1.5rem; margin-bottom: 0; margin-top:-1.5rem;text-align: right;">
+                    <span class="emphasis">What</span> are the Busiest Time Slots?
+                  </h4>
+                </div>
+                <div id="chart-busiest-slots" style="margin-bottom: 0.5rem; margin-left: 35rem;margin-top: -0.5rem;"></div>
+                <div id="busiest-desc" class="dashboard-sub" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -1rem; margin-left: 38rem; max-width: 700px; text-align: left;"></div>
+                <h4 class="subsection-title" style="margin-left: 37.5rem; margin-top: 1.2rem; margin-bottom: 1.2rem;">
+                    <span class="emphasis">What</span> are the Peak Hours for Passenger Journeys？
+                </h4>
+                <div id="chart-peak-hours" style="margin-bottom: 0.5rem; max-width: 710px; margin-left: 32rem;margin-top: -2.3rem;"></div>
+                <div id="peak-hours-desc" class="dashboard-sub" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -8rem; margin-left: 38rem; max-width: 700px; text-align: left;"></div>
+                <h4 class="subsection-title" style="margin-left: 38rem; margin-top: 1.2rem; margin-bottom: 1.2rem;">
+                    <span class="emphasis">What</span> are the Top 7 Departure/Arrival Stations?
+                </h4>
+                <div style="display: flex; flex-direction: row; align-items: flex-end; margin-left: 38rem; margin-bottom: 0.7rem;margin-top: -1rem;">
+                  <div style="font-size: 1.08rem; font-weight: bold; font-family: 'PT Serif', serif;">Departure</div>
+                  <div style="width: 260px;"></div>
+                  <div style="font-size: 1.08rem; font-weight: bold; font-family: 'PT Serif', serif;">Arrival</div>
+                </div>
+                <div id="chart-top-departure" style="margin-bottom: 0.5rem; margin-left: 37rem;"></div>
+                <div id="chart-top-arrival" style="margin-bottom: 0.5rem;margin-left: 60rem;margin-top:-23rem;"></div>
+                <div style="display: flex; align-items: flex-start; gap: 2.5rem;">
+                    <div id="chart-journey-trend" style="width: 440px; height: 240px; margin-left: -2.2rem;margin-top:-65rem;"></div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; min-width: 180px; margin-left: -6.2rem;margin-top:-66rem;">
+                        <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0rem; text-align: right;">Journeys</div>
+                        <div id="journey-total" style="font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; color: #222; margin-bottom: 0.2rem; text-align: right;">-</div>
+                        <div style="width: 2px; height: 28px; background: #e5e7eb; margin: 0.2rem 0 0.5rem 0;"></div>
+                        <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0rem; text-align: right;">Cancelled</div>
+                        <div id="journey-cancelled" style="font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 900; color: #222; text-align: right;">-</div>
+                    </div>
+                </div>
+                <div id="journey-desc" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -52rem; line-height: 1.6; max-width: 520px; text-align: left; margin-left: 1.2rem;"></div>
+                <h4 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: -0.5rem;">
+                    <span class="emphasis">Who</span> Uses Railcards?
+                </h4>
+                <div id="chart-railcard" style="width: 100%; max-width: 620px; min-height: 260px;margin-top: 1rem;"></div>
+                <div id="railcard-desc" class="dashboard-sub" style="font-family: 'PT Serif', serif; font-size: 0.95rem; color: #222; margin-top: -1rem; margin-left: 0.2rem; max-width: 520px;"></div>
+                <h4 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: 1.2rem;">
+                    <span class="emphasis">Which</span> Tickets Sell Most?
+                </h4>
+                <div id="chart-ticket-type" style="margin-bottom: 0.5rem;margin-top:1rem;"></div>
+                <div id="tickettype-desc" class="dashboard-sub" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -1rem; margin-left: 0.2rem; max-width: 520px;"></div>
+            </div>
+            <style>
+            .time-filter-btn {
+                font-family: 'Playfair Display', serif;
+                font-size: 1rem;
+                font-weight: 700;
+                color: #222;
+                background: #e5e7eb;
+                border: 2px solid #8e8fc7;
+                border-radius: 6px;
+                padding: 0.28rem 1.1rem;
+                cursor: pointer;
+                transition: all 0.18s cubic-bezier(.4,0,.2,1);
+                box-shadow: none;
+                outline: none;
+            }
+            .time-filter-btn.active {
+                background: #6668b5;
+                color: #f8f7f3;
+                border: 2px solid #1e3a8a;
+            }
+            .time-filter-btn:not(.active):hover {
+                border-color: #6668b5;
+                background: #b6b7d8;
+                color: #222;
+            }
+            #timeFilterGroup {
+                margin-left: 8rem !important;
+            }
+            .revenue-time-filter-btn {
+                font-family: 'Playfair Display', serif;
+                font-size: 1rem;
+                font-weight: 700;
+                color: #222;
+                background: #e5e7eb;
+                border: 2px solid #8e8fc7;
+                border-radius: 6px;
+                padding: 0.28rem 1.1rem;
+                cursor: pointer;
+                transition: all 0.18s cubic-bezier(.4,0,.2,1);
+                box-shadow: none;
+                outline: none;
+            }
+            .revenue-time-filter-btn.active {
+                background: #6668b5;
+                color: #f8f7f3;
+                border: 2px solid #1e3a8a;
+            }
+            .revenue-time-filter-btn:not(.active):hover {
+                border-color: #6668b5;
+                background: #b6b7d8;
+                color: #222;
+            }
+            #revenueTimeFilterGroup {
+                margin-left: 8rem !important;
+            }
+            </style>
+        </section>
+
+        <!-- New Section: What Drives the Revenue—and the Refunds? -->
+        <section class="visualization-container" style="margin-top: -2rem;">
+            <h3 class="section-title">
+                <span class="emphasis">What</span> Drives the Revenue—and the Refunds?
+            </h3>
+            <p class="section-subtitle">From ticket types to delay durations, UK rail sales reveal where money flows—and where it's lost. But how do different journeys shape this financial landscape?</p>
+            <div class="chart-container" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1.5px solid #e5e7eb; margin-top: 1.5rem; padding: 2.5rem 2.5rem 2.5rem 2.5rem; min-height: 1540px;max-width: 1320px;">
+                <div id="revenueTrendFilterGroup" style="display: flex; gap: 1.5rem; margin-top:-1rem;margin-bottom: 2.5rem; justify-content: flex-end; margin-right: 4rem;">
+                    <button class="revenue-time-filter-btn active">ALL</button>
+                    <button class="revenue-time-filter-btn">AM</button>
+                    <button class="revenue-time-filter-btn">PM</button>
+                    <button class="revenue-time-filter-btn">Peak</button>
+                    <button class="revenue-time-filter-btn">Off-Peak</button>
+                </div>
+                <div style="display: flex; align-items: flex-end; justify-content: space-between;margin-top: -4rem; margin-bottom: 0.5rem;">
+                    <h3 class="subsection-title" style="margin-left: 0.2rem; margin-bottom: 0;">
+                        <span class="emphasis">What</span> is the Monthly Trend of Net Revenue?
+                    </h3>
+                    <h3 class="subsection-title" style="margin-right: 12rem; margin-top: 2.5rem; margin-bottom: 0; text-align: right;">
+                        <span class="emphasis">How</span> does Journey Status Impact Net Revenue?
+                    </h3>
+                </div>
+                <div id="chart-journey-status-revenue" style="margin-top: 0.5rem; margin-bottom: 0.5rem; margin-left: 45rem;"></div>
+                <div class="dashboard-sub" id="journey-status-revenue-desc" style="font-family: 'PT Serif', serif; font-size: 1.08rem; color: #222; margin-top: 0.2rem; margin-bottom: 1.2rem; max-width: 700px; text-align: left; margin-left: 46rem;"></div>
+                <h3 class="subsection-title" style="margin-right: 10rem;margin-left:43.5rem; margin-top: -0.5rem; margin-bottom: 0; text-align: right;">
+                    <span class="emphasis">Which</span> Journey Status has the Highest Refund?
+                </h3>
+                <div id="chart-journey-status-refund" style="margin-top: 0.5rem; margin-bottom: 0.5rem; margin-left: 45rem;"></div>
+                <div class="dashboard-sub" id="journey-status-refund-desc" style="font-family: 'PT Serif', serif; font-size: 1.08rem; color: #222; margin-top: 0.2rem; margin-bottom: 1.2rem; max-width: 700px; text-align: left; margin-left: 46rem;"></div>
+                <h3 class="subsection-title" style="margin-right: 10rem;margin-left:43.5rem; margin-top: -0.5rem; margin-bottom: 0; text-align: right;">
+                    <span class="emphasis">What</span> are the Top/Bottom 5 Routes by Revenue?
+                </h3>
+                <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem;">
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-left: 44rem;margin-top: 0.3rem;">Top 5 Routes</h4>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-right: 10rem;margin-top: 0.3rem;">Bottom 5 Routes</h4>
+                </div>
+                <div style="display: flex; flex-direction: row; gap: 2rem; margin-bottom: 0rem; margin-left: 44rem;margin-top: -2.5rem;">
+                  <div id="chart-top-routes" style="width: 280px; min-height: 380px;"></div>
+                  <div id="chart-bottom-routes" style="width: 280px; min-height: 380px;"></div>
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; gap: 2.5rem; margin-bottom: 1.5rem;">
+                  <div id="chart-revenue-trend" style="flex: 1 1 0; min-width: 420px; max-width: 500px;margin-left: -1.2rem; margin-top: -55rem;"></div>
+                  <div class.revenue-stats" style="flex: 0 0 220px; margin-left: -6.2rem; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start;text-align: right;margin-top: -55rem;">
+                    <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0rem;text-align: right;">Net Revenue</div>
+                    <div id="revenue-total" style="font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; color: #222; margin-bottom: 1.2rem;">-</div>
+                    <div style="width: 2px; height: 28px; background: #e5e7eb; margin: 0.2rem 0 0.5rem 0;margin-left: 5rem;"></div>
+                    <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0rem;text-align: right;">Refund</div>
+                    <div id="revenue-refund" style="font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 900; color: #222;text-align: right;">-</div>
+                  </div>
+                </div>
+                <div id="revenue-desc" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -40rem; line-height: 1.6; max-width: 700px; text-align: left;"></div>
+                <h4 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: 1.2rem;">
+                    <span class="emphasis">What</span> is the Distribution of Net Revenue by Ticket Type?
+                </h4>
+                <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 2.5rem; margin-bottom: 1.5rem;">
+                  <div id="chart-revenue-type" style="flex: 1 1 0; min-width: 340px; max-width: 500px;"></div>
+                  <div class.revenue-type-stats" style="flex: 0 0 180px; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-start; text-align: right; margin-left: -5.5rem; margin-top: 0.5rem;">
+                    <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0.2rem;">Advance</div>
+                    <div id="revenue-advance" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: bold; color: #222; line-height: 0.9; margin-bottom: 1.2rem;">-</div>
+                    <div style="width: 2px; height: 28px; background: #e5e7eb; margin: 0.2rem 0 0.5rem 0;"></div>
+                    <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0.2rem;">Anytime</div>
+                    <div id="revenue-anytime" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: bold; color: #222; line-height: 0.9; margin-bottom: 1.2rem;">-</div>
+                    <div style="width: 2px; height: 28px; background: #e5e7eb; margin: 0.2rem 0 0.5rem 0;"></div>
+                    <div style="font-family: 'PT Serif', serif; font-size: 1.15rem; color: #444; margin-bottom: 0.2rem;">Off-Peak</div>
+                    <div id="revenue-offpeak" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: bold; color: #222; line-height: 0.9;">-</div>
+                  </div>
+                </div>
+                <div id="revenue-type-desc" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -0.5rem; line-height: 1.6; max-width: 680px; text-align: left;"></div>
+                <div style="display: flex; align-items: flex-end; justify-content: space-between;margin-top: -0.5rem; margin-bottom: 0.5rem;">
+                    <h4 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: 1.2rem;">
+                        <span class="emphasis">What</span> is the Impact of Delay Duration on Refunds?
+                    </h4>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; margin-right: 58rem; margin-top: -20rem;">
+                        <h3 class="subsection-title" style="margin-bottom: 0.5rem;margin-right:18.5rem;margin-top:-2rem;">
+                            <span class="emphasis">City–Route–Refund</span> Overview
+                        </h3>
+                        <p style="font-family: 'PT Serif', serif; font-style: italic; font-size: 1.05rem; color: #666; margin: 0; margin-left: 15rem; width: 600px;">Not all the routes will get refunded if delayed or canceled.</p>
+                    </div>
+                </div>
+                <div style="position: relative; width: 50%;">
+                  <div>
+                    <div id="delay-refund-chart" style="width: 100%; min-height: 380px; margin-bottom: 1.5rem;"></div>
+                    <div id="delay-refund-desc" class="dashboard-sub" style="font-family: 'PT Serif', serif; font-size: 1.05rem; color: #222; margin-top: -2rem; line-height: 1.6; max-width: 680px; text-align: left;"></div>
+                  </div>
+                  <div id="parallel-sets-panel" style="position: absolute; top: 0; right: -640px; width: 600px; min-width: 420px; z-index: 10;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; margin-top: 0.5rem;">
+                      <div style="width: 45%;">
+                        <label style="display: block; margin-bottom: 6px; font-family: Georgia, Times New Roman, serif; color: #374151; font-size: 0.9rem; font-weight: bold;">Origin City</label>
+                        <select id="origin-city-select" multiple style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px; background-color: #f8f6f1;">
+                          <option value="London">London</option>
+                          <option value="Liverpool">Liverpool</option>
+                          <option value="Manchester">Manchester</option>
+                          <option value="Birmingham">Birmingham</option>
+                          <option value="York">York</option>
+                          <option value="Reading">Reading</option>
+                          <option value="Oxford">Oxford</option>
+                          <option value="Bristol">Bristol</option>
+                          <option value="Edinburgh">Edinburgh</option>
+                        </select>
+                      </div>
+                      <div style="width: 45%;">
+                        <label style="display: block; margin-bottom: 6px; font-family: Georgia, Times New Roman, serif; color:#374151; font-size: 0.9rem; font-weight: bold;">Destination City</label>
+                        <select id="destination-city-select" multiple style="width: 100%; padding: 6px; border: 1px solid #d1d5db; border-radius: 4px; background-color: #f8f6f1;">
+                          <option value="London">London</option>
+                          <option value="Liverpool">Liverpool</option>
+                          <option value="Manchester">Manchester</option>
+                          <option value="Birmingham">Birmingham</option>
+                          <option value="York">York</option>
+                          <option value="Reading">Reading</option>
+                          <option value="Oxford">Oxford</option>
+                          <option value="Bristol">Bristol</option>
+                          <option value="Edinburgh">Edinburgh</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div id="parallel-sets-chart" style="width: 100%; min-width: 400px; height: 340px; background: transparent;margin-top: 3rem;"></div>
+                  </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Load D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Load TopoJSON -->
+    <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
+    <!-- Load our script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

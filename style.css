@@ -1,0 +1,41 @@
+body {
+  font-family: 'Merriweather', serif;
+  line-height: 1.7;
+  background-color: #fefefe;
+  color: #111;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  color: #222;
+}
+
+.title-section {
+  text-align: center;
+  border-bottom: 2px solid #333;
+  padding-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+section {
+  padding: 3rem 0;
+  border-top: 1px solid #ccc;
+}
+
+.chart {
+  margin-top: 1rem;
+}
