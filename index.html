@@ -105,7 +105,10 @@
                                 </ul>
                             </div>
                             <div class="operators">
-                                <h5>Operators</h5>
+                                <div class="operators-header">
+                                    <h5>Operators</h5>
+                                    <h5>Punctuality</h5>
+                                </div>
                                 <ul>
                                     <li>UK Rail Network</li>
                                 </ul>
@@ -128,7 +131,7 @@
                             <span class="emphasis">Where</span> Europe Cancels Most
                         </h4>
                         <p class="chart-introduction">
-                            <em>Most cancellations are concentrated in just a handful of countries. But why do large national networks—like Germany and the UK—struggle more than others?</em>
+                            <em>Most cancellations are concentrated in just a handful of countries. But why do large national networks—like Germany and the UK—struggle more than others? Here, we highlight the top 8 countries in Europe with the highest train cancellation rates.</em>
                         </p>
                         <div class="chart-container">
                             <h3 class="chart-title">Cancellation Rates across Europe</h3>
@@ -143,12 +146,12 @@
                             <h4 class="subsection-title" style="margin-left: 1.5rem; margin-top: 0; margin-bottom: 0;">
                                 <span class="emphasis">Which</span> Tracks Run Smoothest?
                             </h4>
-                            <h4 class="subsection-title" style="margin-right: 4.5rem; margin-top: 0; margin-bottom: 0; text-align: right; margin-left: 21vw;">
+                            <h4 class="subsection-title" style="margin-right: 7rem; margin-top: 0; margin-bottom: 0; text-align: right; margin-left: 20vw;">
                                 <span class="emphasis">Where</span> Does the UK Fit In?
                             </h4>
                         </div>
-                        <p class="chart-introduction" style="margin-left: 1.5rem; max-width: 1400px; width: 150%;">
-                            <em>Some countries seem to glide along with affordable, punctual trains—others derail on price, compensation, or fairness. What sets the smooth operators apart?</em>
+                        <p class="chart-introduction" style="margin-left: 1.5rem; max-width: 1400px; width: 150%; margin-top: -1rem;">
+                            <em>From punctuality to compensation, ease of booking, and cycling friendliness, countries vary in how smoothly their train systems operate. This chart compares the UK with other five nations across the service dimensions to reveal who may keep passengers on track.</em>
                         </p>
                         <!-- Bubble Grid Chart Container -->
                         <div id="bubbleGridChart" style="margin-top: 0.5rem; margin-left: 1.5rem;"></div>
@@ -167,8 +170,10 @@
                             </div>
                         </div>
                         <!-- UK fit in description, right column -->
-                        <p class="chart-introduction" style="margin-top: 10.5rem; margin-left: 13.5rem; max-width: 1400px; width: 150%; text-align: left;">
-                            <em>Despite its robust network, the UK continues to underperform in key service dimensions. But is it truly an outlier—or simply part of a struggling league of large rail systems?</em>
+                        <p class="chart-introduction" style="margin-top: 11.2rem; margin-left: 13.5rem; max-width: 1400px; width: 150%; text-align: left;">
+                            <em>Despite its robust network, the UK continues to underperform in key service dimensions. But is it truly an outlier—or simply part of a struggling league of large rail systems?
+                            To find out, the cosine similarity between the UK and other European countries on punctuality, compensation, booking, and cycling policies are calculated—revealing how closely other countries align with the UK’s rail profile.
+                            </em>
                         </p>
                         <div style="display: flex; flex-direction: row; align-items: flex-start; margin-top: -3.5rem; margin-left: 13rem;">
                             <div id="networkFlowerChart"></div>
@@ -404,7 +409,7 @@
               <div style="display: flex; align-items: flex-start; gap: 2rem;">
                 <div id="leading-causes-tornado" style="width: 50%; max-width: 700px; height: 420px; margin-top: 1.2rem; margin-bottom: 2.5rem;"></div>
                 <div style="flex: 1;">
-                  <h3 class="subsection-title" style="margin-left: 0.2rem; margin-top: 1.2rem; margin-bottom: 1rem;">
+                  <h3 class="subsection-title" style="margin-left: 2.5rem; margin-top: 1.2rem; margin-bottom: 1rem;">
                     <span class="emphasis">Common</span> Keywords in Delay Reasons
                   </h3>
                   <div id="delay-wordcloud" style="width: 120%; height: 420px; background: transparent;margin-left: -6rem;">

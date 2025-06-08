@@ -1154,4 +1154,18 @@ body {
     position: relative;
     width: 600px;
     display: block;
+}
+
+.operators-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.operators-header h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    margin: 0;
+    color: var(--text-primary);
 } 
