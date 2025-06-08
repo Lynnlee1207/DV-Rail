@@ -474,14 +474,17 @@ function updateCountryDetails(countryName, details, operators) {
         </div>
 
         <div class="operators-section">
-            <h3>Operators</h3>
+            <div class="operators-header">
+                <h5>Operators</h5>
+                <h5>Punctuality</h5>
+            </div>
             <div class="operators-container">
                 ${operators.length > 0 ? 
                     operators.map(operator => `
                         <div class="operator-item">
                             <span class="operator-name">${operator.operator}</span>
                             <span class="operator-score" style="color: ${operator.punctuality >= 85 ? '#22c55e' : '#ef4444'}">
-                                ${operator.punctuality.toFixed(1)}%
+                                ${operator.punctuality ? operator.punctuality.toFixed(1) + '%' : 'N/A'}
                             </span>
                         </div>
                     `).join('')
@@ -1811,7 +1814,8 @@ async function initialize() {
             const ukDetails = {
                 punctuality: d3.mean(ukOperators, d => d.punctuality),
                 cancellation: d3.mean(ukOperators, d => d.cancellation),
-                price: d3.mean(ukOperators, d => d.ticketPrice)
+                price: d3.mean(ukOperators, d => d.ticketPrice),
+                operators: ukOperators.length
             };
             updateCountryDetails('UK', ukDetails, ukOperators);
         }
